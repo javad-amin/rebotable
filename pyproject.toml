@@ -12,6 +12,8 @@ python = "^3.10"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.0"
 black = {version = "^22.10.0", allow-prereleases = true}
+flake8 = "^6.0.0"
+mypy = "^0.991"
 
 [build-system]
 requires = ["poetry-core"]
