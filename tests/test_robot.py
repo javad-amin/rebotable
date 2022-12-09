@@ -58,7 +58,7 @@ def test_robot_move_towards_direction_not_placed_yet() -> None:
 
 
 def test_robot_move_towards_direction_would_fall_from_table() -> None:
-    """Test moving the robot forward when it's not placed yet"""
+    """Test moving forward should be blocked when placement is outside of table"""
     robot = Robot()
     robot.place(Position(0, 0), "SOUTH")
 
@@ -70,7 +70,7 @@ def test_robot_move_towards_direction_would_fall_from_table() -> None:
 
 
 def test_robot_move_towards_direction_successfully() -> None:
-    """Test moving the robot forward when it's not placed yet"""
+    """Test moving the robot forward when placed and moving is allowed"""
     robot = Robot()
 
     robot.place(Position(1, 1), "NORTH")
@@ -90,7 +90,19 @@ def test_robot_move_towards_direction_successfully() -> None:
     assert robot.position == Position(1, 0)
 
 
+def test_robot_rotate__left_unplaced_robot() -> None:
+    """Test rotate left unplaced robot"""
+    robot = Robot()
+
+    with pytest.raises(
+        RobotNotPlacedYet,
+        match="LEFT Command not accepted! Place the robot first by: PLACE <x_position>,<y_position>,<direction>",
+    ):
+        robot.rotate_left()
+
+
 def test_robot_rotate_left() -> None:
+    """Test rotate the robot to the left all possible scenarios"""
     robot = Robot()
     robot.place(Position(1, 1), "NORTH")
 
@@ -107,7 +119,19 @@ def test_robot_rotate_left() -> None:
     assert robot.direction == "NORTH"
 
 
+def test_robot_rotate_right_unplaced_robot() -> None:
+    """Test rotate left unplaced robot"""
+    robot = Robot()
+
+    with pytest.raises(
+        RobotNotPlacedYet,
+        match="RIGHT Command not accepted! Place the robot first by: PLACE <x_position>,<y_position>,<direction>",
+    ):
+        robot.rotate_right()
+
+
 def test_robot_rotate_right() -> None:
+    """Test rotate the robot to the right all possible scenarios"""
     robot = Robot()
     robot.place(Position(1, 1), "NORTH")
 

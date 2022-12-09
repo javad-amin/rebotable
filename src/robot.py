@@ -40,21 +40,20 @@ class Robot:
 
     def move(self) -> None:
         """Moves the robot forward one step towards the facing direction"""
-        if self.position == Position(-1, -1):
-            raise RobotNotPlacedYet(
-                "MOVE Command not accepted! Place the robot first by: PLACE <x_position>,<y_position>,<direction>"
-            )
+        self._check_if_robot_is_placed("MOVE")
         new_position = self.position + DIRECTION_MOVEMENT_MAP[self.direction]
         self.place(new_position, self.direction)
 
     def rotate_left(self) -> None:
         """Rotates the robot to the left facing the direction defined to be to the left"""
+        self._check_if_robot_is_placed("LEFT")
         directions = list(DIRECTION_MOVEMENT_MAP.keys())
         current_direction_index = directions.index(self.direction)
         self.direction = directions[current_direction_index - 1]
 
     def rotate_right(self) -> None:
         """Rotates the robot to the right facing the direction defined to be to the left"""
+        self._check_if_robot_is_placed("RIGHT")
         directions = list(DIRECTION_MOVEMENT_MAP.keys())
         current_direction_index = directions.index(self.direction)
         new_direction_index = current_direction_index + 1
@@ -62,6 +61,12 @@ class Robot:
             self.direction = directions[0]
         else:
             self.direction = directions[new_direction_index]
+
+    def _check_if_robot_is_placed(self, command: str) -> None:
+        if not self.table.is_on_table(self.position):
+            raise RobotNotPlacedYet(
+                f"{command.upper()} Command not accepted! Place the robot first by: PLACE <x_position>,<y_position>,<direction>"
+            )
 
     def __str__(self) -> None:
         return f"{str(self.position)},{self.direction}"
