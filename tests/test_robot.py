@@ -151,9 +151,20 @@ def test_robot_rotate_right() -> None:
         return f"{self.position},{self.facing}"
 
 
+def test_report_no_placed_yet() -> None:
+    """Tests that the string representation of a position is as desireable"""
+    robot = Robot()
+
+    with pytest.raises(
+        RobotNotPlacedYet,
+        match="REPORT Command not accepted! Place the robot first by: PLACE <x_position>,<y_position>,<direction>",
+    ):
+        robot.report()
+
+
 def test_string_representation_of_a_position() -> None:
     """Tests that the string representation of a position is as desireable"""
     robot = Robot()
     robot.place(Position(3, 4), "WEST")
 
-    assert str(robot) == "3,4,WEST"
+    assert robot.report() == "3,4,WEST"

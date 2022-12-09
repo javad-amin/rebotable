@@ -62,11 +62,13 @@ class Robot:
         else:
             self.direction = directions[new_direction_index]
 
+    def report(self) -> str:
+        """Reports robots position and the direction that the robot is facing"""
+        self._check_if_robot_is_placed("REPORT")
+        return f"{str(self.position)},{self.direction}"
+
     def _check_if_robot_is_placed(self, command: str) -> None:
         if not self.table.is_on_table(self.position):
             raise RobotNotPlacedYet(
                 f"{command.upper()} Command not accepted! Place the robot first by: PLACE <x_position>,<y_position>,<direction>"
             )
-
-    def __str__(self) -> None:
-        return f"{str(self.position)},{self.direction}"
