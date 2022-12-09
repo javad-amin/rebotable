@@ -122,3 +122,14 @@ def test_robot_rotate_right() -> None:
 
     robot.rotate_right()
     assert robot.direction == "NORTH"
+
+    def __str__(self) -> str:
+        return f"{self.position},{self.facing}"
+
+
+def test_string_representation_of_a_position() -> None:
+    """Tests that the string representation of a position is as desireable"""
+    robot = Robot()
+    robot.place(Position(3, 4), "WEST")
+
+    assert str(robot) == "3,4,WEST"

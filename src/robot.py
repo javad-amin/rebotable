@@ -62,3 +62,6 @@ class Robot:
             self.direction = directions[0]
         else:
             self.direction = directions[new_direction_index]
+
+    def __str__(self) -> None:
+        return f"{str(self.position)},{self.direction}"
