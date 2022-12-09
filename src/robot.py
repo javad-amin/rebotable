@@ -1,15 +1,18 @@
+from collections import OrderedDict
 from dataclasses import dataclass
 
 from exceptions import PositionOutsideTable, RobotNotPlacedYet, UnknownDirection
 from position import Position
 from table import Table
 
-DIRECTION_MOVEMENT_MAP = {
-    "NORTH": Position(0, 1),
-    "EAST": Position(1, 0),
-    "SOUTH": Position(0, -1),
-    "WEST": Position(-1, 0),
-}
+DIRECTION_MOVEMENT_MAP = OrderedDict(
+    (
+        ("NORTH", Position(0, 1)),
+        ("EAST", Position(1, 0)),
+        ("SOUTH", Position(0, -1)),
+        ("WEST", Position(-1, 0)),
+    )
+)
 
 
 @dataclass
@@ -43,3 +46,19 @@ class Robot:
             )
         new_position = self.position + DIRECTION_MOVEMENT_MAP[self.direction]
         self.place(new_position, self.direction)
+
+    def rotate_left(self) -> None:
+        """Rotates the robot to the left facing the direction defined to be to the left"""
+        directions = list(DIRECTION_MOVEMENT_MAP.keys())
+        current_direction_index = directions.index(self.direction)
+        self.direction = directions[current_direction_index - 1]
+
+    def rotate_right(self) -> None:
+        """Rotates the robot to the right facing the direction defined to be to the left"""
+        directions = list(DIRECTION_MOVEMENT_MAP.keys())
+        current_direction_index = directions.index(self.direction)
+        new_direction_index = current_direction_index + 1
+        if new_direction_index > len(directions) - 1:
+            self.direction = directions[0]
+        else:
+            self.direction = directions[new_direction_index]

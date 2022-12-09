@@ -88,3 +88,37 @@ def test_robot_move_towards_direction_successfully() -> None:
     robot.place(Position(1, 1), "SOUTH")
     robot.move()
     assert robot.position == Position(1, 0)
+
+
+def test_robot_rotate_left() -> None:
+    robot = Robot()
+    robot.place(Position(1, 1), "NORTH")
+
+    robot.rotate_left()
+    assert robot.direction == "WEST"
+
+    robot.rotate_left()
+    assert robot.direction == "SOUTH"
+
+    robot.rotate_left()
+    assert robot.direction == "EAST"
+
+    robot.rotate_left()
+    assert robot.direction == "NORTH"
+
+
+def test_robot_rotate_right() -> None:
+    robot = Robot()
+    robot.place(Position(1, 1), "NORTH")
+
+    robot.rotate_right()
+    assert robot.direction == "EAST"
+
+    robot.rotate_right()
+    assert robot.direction == "SOUTH"
+
+    robot.rotate_right()
+    assert robot.direction == "WEST"
+
+    robot.rotate_right()
+    assert robot.direction == "NORTH"
