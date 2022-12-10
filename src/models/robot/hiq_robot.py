@@ -1,25 +1,29 @@
 from collections import OrderedDict
 from dataclasses import dataclass
 
-from exceptions import PositionOutsideTable, RobotNotPlacedYet, UnknownDirection
-from position import Position
-from table import Table
+from models.position import HIQPosition, Position
+from models.robot.exceptions import (
+    PositionOutsideTable,
+    RobotNotPlacedYet,
+    UnknownDirection,
+)
+from models.table import HIQTable, Table
 
 DIRECTION_MOVEMENT_MAP = OrderedDict(
     (
-        ("NORTH", Position(0, 1)),
-        ("EAST", Position(1, 0)),
-        ("SOUTH", Position(0, -1)),
-        ("WEST", Position(-1, 0)),
+        ("NORTH", HIQPosition(0, 1)),
+        ("EAST", HIQPosition(1, 0)),
+        ("SOUTH", HIQPosition(0, -1)),
+        ("WEST", HIQPosition(-1, 0)),
     )
 )
 
 
 @dataclass
-class Robot:
-    position: Position = Position(-1, -1)
+class HIQRobot:
+    position: Position = HIQPosition(-1, -1)
     direction: str = "NORTH"
-    table: Table = Table(5, 5)
+    table: Table = HIQTable(5, 5)
 
     def place(self, position, direction) -> None:
         """Places the robot in the given position and facing the given direction

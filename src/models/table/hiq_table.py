@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from position import Position
+from models.position import Position
 
 
 @dataclass
-class Table:
+class HIQTable:
     width: int = 0
     height: int = 0
 
